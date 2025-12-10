@@ -16,6 +16,7 @@ public class InvoiceTest {
   String title = "Invoice A";
   java.util.Date date = new java.util.Date();
   TaxRate taxRate = TaxRate.TEN;
+  private int userId = 10;
 
   Map<Integer, ProductWithQt> products = Map.of(1, new ProductWithQt(1, "Product A", 10.0, 2),
       2, new ProductWithQt(2, "Product B", 20.0, 1));
@@ -26,7 +27,7 @@ public class InvoiceTest {
   @BeforeEach
   private void setNewInvoice() {
     productsList = new ProductsList(products);
-    invoice = new Invoice(id, title, date, taxRate, productsList);
+    invoice = new Invoice(id, title, date, taxRate, productsList, userId);
   }
 
   @Test
@@ -58,7 +59,7 @@ public class InvoiceTest {
   @Test
   public void testCalculateTaxAmountWithOtherTaxRate() {
     // given
-    final Invoice invoiceB = new Invoice(id, title, date, TaxRate.EIGHTTEEN, productsList);
+    final Invoice invoiceB = new Invoice(id, title, date, TaxRate.EIGHTTEEN, productsList, userId);
     // 40 * 18 / 100
     double taxAmount = 7.2;
 
@@ -78,7 +79,7 @@ public class InvoiceTest {
   @Test
   public void testCalculateGrossSum() {
     // given
-    final Invoice invoiceB = new Invoice(id, title, date, TaxRate.EIGHT, productsList);
+    final Invoice invoiceB = new Invoice(id, title, date, TaxRate.EIGHT, productsList, userId);
 
     // 40 + 3.2
     double grossSum = 43.2;

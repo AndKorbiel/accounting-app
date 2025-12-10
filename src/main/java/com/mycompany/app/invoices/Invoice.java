@@ -13,18 +13,21 @@ public class Invoice {
   private ProductsList productsList;
   private double taxAmount;
   private double grossSum;
+  private int userId;
 
   public Invoice(
       int id,
       String title,
       Date date,
       TaxRate taxRate,
-      ProductsList productsList) {
+      ProductsList productsList,
+      int userId) {
     this.id = id;
     this.title = title;
     this.date = date;
     this.taxRate = taxRate;
     this.productsList = productsList;
+    this.userId = userId;
 
     this.calculateTaxAmount();
     this.calculateGrossSum();
@@ -60,6 +63,10 @@ public class Invoice {
 
   public double getGrossSum() {
     return this.grossSum;
+  }
+
+  public int getUserId() {
+    return this.userId;
   }
 
   public void calculateTaxAmount() {

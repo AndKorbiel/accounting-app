@@ -1,0 +1,19 @@
+package com.mycompany.app.users;
+
+public class User {
+  private int id;
+  private String name;
+
+  public User(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  public int getUserId() {
+    return this.id;
+  }
+
+  public String getUserName() {
+    return this.name;
+  }
+}
