@@ -1,23 +1,25 @@
 package com.mycompany.app.products;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ProductsList {
-  private Map<Integer, ProductWithQt> productsList;
+  private Map<Integer, ProductWithQt> productsMappedById;
   private double totalSum;
 
-  public ProductsList(Map<Integer, ProductWithQt> productsList) {
-    this.productsList = productsList;
+  public ProductsList(List<ProductWithQt> productsList) {
+    this.productsMappedById = productsList.stream().collect(Collectors.toMap(ProductWithQt::getId, item -> item));
     this.calculateTotalSum();
   }
 
   public void calculateTotalSum() {
     double sum = 0;
-    final Set<Integer> keys = productsList.keySet();
+    final Set<Integer> keys = productsMappedById.keySet();
 
     for (Integer key : keys) {
-      sum += productsList.get(key).getLocalSum();
+      sum += productsMappedById.get(key).getLocalSum();
     }
 
     totalSum = sum;
@@ -28,6 +30,6 @@ public class ProductsList {
   }
 
   public Map<Integer, ProductWithQt> getProductsList() {
-    return this.productsList;
+    return this.productsMappedById;
   }
 }

@@ -18,7 +18,7 @@ public class InvoicesListTest {
   private ProductWithQt productB = new ProductWithQt(2, "Product B", 20.0, 1);
   private ProductWithQt productC = new ProductWithQt(3, "Product C", 120.0, 21);
 
-  Map<Integer, ProductWithQt> products = Map.of(productA.getId(), productA, productB.getId(), productB);
+  List<ProductWithQt> products = List.of(productA, productB);
 
   private ProductsList productsList;
   private Invoice invoiceA;
@@ -33,7 +33,7 @@ public class InvoicesListTest {
 
     invoiceA = new Invoice(1, "Invoice A", date, TaxRate.TEN, productsList, 10);
     invoiceB = new Invoice(2, "Invoice B", date, TaxRate.EIGHTTEEN, productsList, 21);
-    invoiceC = new Invoice(3, "Invoice C", date, TaxRate.EIGHT, new ProductsList(Map.of(productC.getId(), productC)),
+    invoiceC = new Invoice(3, "Invoice C", date, TaxRate.EIGHT, new ProductsList(List.of(productC)),
         10);
 
     invoicesList = new InvoicesList(List.of(invoiceA, invoiceB, invoiceC));

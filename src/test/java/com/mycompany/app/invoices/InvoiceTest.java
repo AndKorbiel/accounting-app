@@ -2,7 +2,7 @@ package com.mycompany.app.invoices;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Map;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ public class InvoiceTest {
   TaxRate taxRate = TaxRate.TEN;
   private int userId = 10;
 
-  Map<Integer, ProductWithQt> products = Map.of(1, new ProductWithQt(1, "Product A", 10.0, 2),
-      2, new ProductWithQt(2, "Product B", 20.0, 1));
+  List<ProductWithQt> products = List.of(new ProductWithQt(1, "Product A", 10.0, 2),
+      new ProductWithQt(2, "Product B", 20.0, 1));
 
   private ProductsList productsList;
   private Invoice invoice;
