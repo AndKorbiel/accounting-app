@@ -16,7 +16,7 @@ public class InvoicesListTest {
   java.util.Date date = new java.util.Date();
   private ProductWithQt productA = new ProductWithQt(1, "Product A", 10.0, 2);
   private ProductWithQt productB = new ProductWithQt(2, "Product B", 20.0, 1);
-  private ProductWithQt productC = new ProductWithQt(3, "Product C", 120.0, 21);
+  private ProductWithQt productC = new ProductWithQt(3, "Product C", 120.0, 2);
 
   List<ProductWithQt> products = List.of(productA, productB);
 
@@ -28,7 +28,7 @@ public class InvoicesListTest {
   private Map<Integer, List<Invoice>> invoicesMap;
 
   @BeforeEach
-  private void setNewInvoice() {
+  private void setNewInvoicesList() {
     productsList = new ProductsList(products);
 
     invoiceA = new Invoice(1, "Invoice A", date, TaxRate.TEN, productsList, 10);
@@ -51,5 +51,18 @@ public class InvoicesListTest {
     assertEquals(List.of(invoiceA, invoiceC), invoicesList.getInvociesByUsersId(10));
     assertEquals(List.of(invoiceB), invoicesList.getInvociesByUsersId(21));
     assertEquals(null, invoicesList.getInvociesByUsersId(99));
+  }
+
+  @Test
+  public void testCalculateUserInvoicesGrossSum() {
+    // invoiceA: 40 * 10% = 44
+    // invoiceC: 240 * 8% = 259,2
+    double expectedResultA = 303.2;
+
+    // invoiceB: 40* 18% 
+    double expectedResultB = 47.2;
+
+    assertEquals(expectedResultA, invoicesList.calculateUserInvoicesGrossSum(10));
+    assertEquals(expectedResultB, invoicesList.calculateUserInvoicesGrossSum(21));
   }
 }

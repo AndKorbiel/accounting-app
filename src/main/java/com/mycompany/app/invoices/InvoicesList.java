@@ -2,6 +2,7 @@ package com.mycompany.app.invoices;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class InvoicesList {
@@ -40,5 +41,24 @@ public class InvoicesList {
 
   public List<Invoice> getInvociesByUsersId(int userId) {
     return invoicesMap.get(userId);
+  }
+
+  public double calculateUserInvoicesGrossSum(int userId) {
+    double sum = 0;
+    List<Invoice> userInvoices = this.getInvociesByUsersId(userId);
+
+    for (Invoice invoice : userInvoices) {
+      sum += invoice.getGrossSum();
+    }
+
+    /*
+     * // or
+     * return userInvoices.stream().mapToDouble(invoice ->
+     * invoice.getGrossSum()).sum();
+     * // or
+     * return userInvoices.stream().mapToDouble(Invoice::getGrossSum).sum();
+     */
+
+    return sum;
   }
 }
