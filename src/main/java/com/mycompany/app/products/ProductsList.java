@@ -11,18 +11,9 @@ public class ProductsList {
 
   public ProductsList(List<ProductWithQt> productsList) {
     this.productsMappedById = productsList.stream().collect(Collectors.toMap(ProductWithQt::getId, item -> item));
-    this.calculateTotalSum();
-  }
 
-  public void calculateTotalSum() {
-    double sum = 0;
-    final Set<Integer> keys = productsMappedById.keySet();
-
-    for (Integer key : keys) {
-      sum += productsMappedById.get(key).getLocalSum();
-    }
-
-    totalSum = sum;
+    ProductsListCalculations productsListCalculations = new ProductsListCalculations();
+    productsListCalculations.calculateTotalSum();
   }
 
   public double getTotalSum() {
@@ -31,5 +22,18 @@ public class ProductsList {
 
   public Map<Integer, ProductWithQt> getProductsList() {
     return this.productsMappedById;
+  }
+
+  private class ProductsListCalculations {
+    public void calculateTotalSum() {
+      double sum = 0;
+      final Set<Integer> keys = ProductsList.this.productsMappedById.keySet();
+
+      for (Integer key : keys) {
+        sum += productsMappedById.get(key).getLocalSum();
+      }
+
+      totalSum = sum;
+    }
   }
 }

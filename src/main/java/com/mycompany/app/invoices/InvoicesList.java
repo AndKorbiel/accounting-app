@@ -2,37 +2,15 @@ package com.mycompany.app.invoices;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class InvoicesList {
   private Map<Integer, List<Invoice>> invoicesMap;
 
   public InvoicesList(List<Invoice> invoices) {
-    this.invoicesMap = mapInvoicesByUserId(invoices);
-  }
+    UserOperations userOperations = new UserOperations();
 
-  private static Map<Integer, List<Invoice>> mapInvoicesByUserId(List<Invoice> invoices) {
-    /* Manual way */
-    // Map<Integer, List<Invoice>> invoicesMap = new HashMap<>();
-    // List<Integer> userIds = invoices.stream().map(el -> el.getUserId()).toList();
-
-    // for (Integer userId : userIds) {
-    // List<Invoice> userInvoices = new ArrayList<>();
-
-    // for (Invoice inv : invoices) {
-    // if (inv.getUserId() == userId) {
-    // userInvoices.add(inv);
-    // }
-    // }
-
-    // invoicesMap.put(userId, userInvoices);
-    // }
-
-    // return invoicesMap;
-
-    /* Modern */
-    return invoices.stream().collect(Collectors.groupingBy(Invoice::getUserId));
+    this.invoicesMap = userOperations.mapInvoicesByUserId(invoices);
   }
 
   public Map<Integer, List<Invoice>> getInvociesMap() {
@@ -44,21 +22,20 @@ public class InvoicesList {
   }
 
   public double calculateUserInvoicesGrossSum(int userId) {
-    double sum = 0;
-    List<Invoice> userInvoices = this.getInvociesByUsersId(userId);
+    UserOperations userOperations = new UserOperations();
 
-    for (Invoice invoice : userInvoices) {
-      sum += invoice.getGrossSum();
+    return userOperations.calculateUserInvoicesGrossSum(userId);
+  }
+
+  private class UserOperations {
+    private Map<Integer, List<Invoice>> mapInvoicesByUserId(List<Invoice> invoices) {
+      return invoices.stream().collect(Collectors.groupingBy(Invoice::getUserId));
     }
 
-    /*
-     * // or
-     * return userInvoices.stream().mapToDouble(invoice ->
-     * invoice.getGrossSum()).sum();
-     * // or
-     * return userInvoices.stream().mapToDouble(Invoice::getGrossSum).sum();
-     */
+    public double calculateUserInvoicesGrossSum(int userId) {
+      List<Invoice> userInvoices = InvoicesList.this.getInvociesByUsersId(userId);
 
-    return sum;
+      return userInvoices.stream().mapToDouble(Invoice::getGrossSum).sum();
+    }
   }
 }
