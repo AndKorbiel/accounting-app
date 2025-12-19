@@ -80,6 +80,13 @@ public class InvoicesListTest {
   }
 
   @Test
+  public void testGetUserInvoicesFromDateRange() {
+    Date twoWeeksBefore = new Date(date.getTime() - (14 * 24 * 60 * 60 * 1000));
+
+    assertEquals(List.of(invoiceC), invoicesList.getUserInvoicesFromDateRange(10, twoWeeksBefore, date));
+  }
+
+  @Test
   public void testCalculateUserInvoicesGrossSum() {
     // invoiceA: 40 * 10% = 44
     // invoiceC: 240 * 8% = 259,2

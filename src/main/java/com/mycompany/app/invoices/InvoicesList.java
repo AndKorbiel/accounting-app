@@ -27,11 +27,16 @@ public class InvoicesList {
 
   public Map<Integer, List<Invoice>> getInvoicesByDate(Date date) {
     return this.dateOperations.getInvoicesByDate(date);
-
   }
 
   public Map<Integer, List<Invoice>> getInvoicesFromDateRange(Date startDate, Date... endDate) {
     return this.dateOperations.getInvoicesFromDateRange(startDate, endDate);
+  }
+
+  public List<Invoice> getUserInvoicesFromDateRange(int userId, Date startDate, Date... endDate) {
+    Map<Integer, List<Invoice>> invoices = this.dateOperations.getInvoicesFromDateRange(startDate, endDate);
+
+    return invoices.get(userId);
   }
 
   public double calculateUserInvoicesGrossSum(int userId) {
