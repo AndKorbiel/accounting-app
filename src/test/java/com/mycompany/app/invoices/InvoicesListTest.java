@@ -69,7 +69,7 @@ public class InvoicesListTest {
     Date fiveDaysBefore = new Date(date.getTime() - (5 * 24 * 60 * 60 * 1000));
     Date oneDayBefore = new Date(date.getTime() - (1 * 24 * 60 * 60 * 1000));
 
-    assertEquals(Map.of(10, List.of(invoiceA, invoiceC), 21, List.of(invoiceB)),
+    assertEquals(Map.of(21, List.of(invoiceB), 10, List.of(invoiceA, invoiceC)),
         invoicesList.getInvoicesFromDateRange(twoWeeksBefore));
 
     assertEquals(Map.of(10, List.of(invoiceA), 21, List.of(invoiceB)),
